@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+	
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#but').click(function(){
+            $('.left').toggle("slide");
+        });
+    });
+</script>
+</head>
+
+    <body>
+        <div class='menu'></div>
+        <button id='but'>{{user.first_name}}</button>
+
+            <div class='tabs'>
+                {%if user.is_authenticated%}
+                <a href="{%url 'logout'%}"><button style="float: right;">Logout</button></a>
+                {%else%}
+                
+                <a href="{%url 'home'%}"><button>Home</button></a>
+                <a href="{%url 'login'%}"><button style="float: right;">Login</button></a>
+                <a href="{%url 'register'%}"><button style="float: right;">Register</button></a>
+                {%endif%}
+                {% ifequal user.last_name "Reception"%}
+                <a href="{%url 'reception'%}"><button>Dashboard</button></a>
+                {%endifequal%}
+                {% ifequal user.last_name "HR"%}
+                <a href="{%url 'dashboard'%}"><button>Dashboard</button></a>
+                <a href="{%url 'accounting'%}"><button>Accounting</button></a>
+                {%endifequal%}
+                {% ifequal user.last_name "Doctor"%}
+                <a href="{% url 'profile' %}"><button>Profile</button></a>
+                <a href="{%url 'appointments'%}"><button>Appointments</button></a>
+                <a href="{% url 'showpres' %}"><button>Prescriptions</button></a>
+                <a href="{% url 'uprofile' %}"><button>Update Profile</button></a>
+                {% endifequal %}
+                {% ifequal user.last_name "Patient"%}
+                <a href="{% url 'profile' %}"><button>Profile</button></a>
+                <a href="{%url 'appointments'%}"><button>Appointments</button></a>
+                <a href="{% url 'payments' %}"><button>Invoice & Payments</button></a>
+                <a href="{% url 'showmedhis' %}"><button>Medical History</button></a>
+                <a href="{% url 'uprofile' %}"><button>Update Profile</button></a>
+                {% endifequal %}
+            </div>
+        <div class='main'>
+               {% block content %}
+
+               {% endblock %}
+        </div>
+    </body>
+</html>
